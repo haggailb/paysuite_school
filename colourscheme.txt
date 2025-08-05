@@ -1,0 +1,3 @@
+Blue (#4a90e2)
+Gold (#f7d793)
+Green (#a0d468)

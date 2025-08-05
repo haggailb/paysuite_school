@@ -1,0 +1,117 @@
+  
+  /* Sidebar */
+  .sidebar {
+    width: 220px;
+    background-color: var(--color-primary);
+    padding: 20px;
+    /* display: flex;
+    flex-direction: column;
+    align-items: flex-start; */
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 60px;
+    transition: transform 0.3s ease-in-out;
+    overflow-y: scroll;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .sidebar button {
+    text-decoration: none;
+    min-width: 100%;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    text-align: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-bottom: solid 1px rgba(231, 161, 10, 0.3);
+  }
+
+  .sidebar a {
+    text-decoration: none;
+    width: 100%;
+    /* padding: 5px; */
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: var(--color-black);
+    background: none;
+    border: none;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-bottom: none;
+  }
+  
+  .sidebar .dropdown-menu {
+    background: var(--color-white);
+    box-shadow: 2px 40px 30px rgba(0, 0, 0, 0.2);
+    border:1px solid grey;
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    padding: 10px;
+    z-index: 1;
+    max-height: 150px;
+    max-width: 100px;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.8s ease-out, transform 0.3s ease-out;
+}
+
+/* When dropdown is visible */
+.sidebar .dropdown-menu.show {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+  .sidebar .sidebar-dropdown-item {
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+    border-bottom: solid var(--color-gold) 1px;
+  }
+  
+  .sidebar .sidebar-dropdown-item:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 3px;
+  }
+  
+  .sidebar button:hover {
+    background-color: var(--color-gold);
+    color: var(--color-primary);
+    border-radius: 5px;
+  }
+
+  @media (max-width: 1024px) {
+    .sidebar {
+      width: 200px;
+    }
+  }
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 220px;
+      position: fixed;
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+    }
+  
+    /* When the sidebar is open */
+    .sidebar.open {
+      transform: translateX(0); /* Show sidebar */
+    }
+  }
+  

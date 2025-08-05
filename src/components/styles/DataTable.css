@@ -1,0 +1,16 @@
+.table-container {
+    border: 1px solid #ddd;
+    margin-top: 10px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .row:nth-child(even) {
+    background: #f9f9f9;
+  }
+  

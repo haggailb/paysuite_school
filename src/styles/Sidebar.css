@@ -1,0 +1,165 @@
+
+.sidebar {
+  width: 220px;
+  background-color: #1e2a38;
+  color: white;
+  padding: 1rem;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #1e2a38;
+  color: white;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar ul li {
+  margin: 1rem 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar ul li a:hover {
+  /* text-decoration: underline; */
+}
+
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-menu a,
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  text-decoration: none;
+  background: none;
+  border: none;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.sidebar-menu a:hover,
+.dropdown-toggle:hover {
+  color: #ffc107;
+}
+
+.dropdown-menu {
+  border: 1px solid red;
+  list-style: none;
+  padding-left: 1.5rem;
+  margin-top: 0.3rem;
+  display: block; /* Ensure it takes up space */
+  background-color: #263544; /* Add contrast */
+  border-left: 2px solid #ffc107; /* Optional highlight */
+  border-radius: 4px;
+  transition: max-height 0.3s ease;
+}
+
+
+.dropdown-menu li {
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-menu a {
+  color: #adb5bd;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  color: white;
+}
+
+.chevron {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.chevron.rotate {
+  transform: rotate(180deg);
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* adds consistent space between icon and text */
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: background 0.2s;
+}
+
+.sidebar ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding-left: 8px;
+}
+
+.nav-text {
+  font-size: 1rem;
+}
+
+.sidebar.collapsed {
+  display: none;
+}
+
+.sidebar-toggle-fab {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle-fab {
+    display: flex;
+  }
+}

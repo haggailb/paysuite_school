@@ -1,6 +1,6 @@
 {
-  "short_name": "PaySuite ERP",
-  "name": "PaySuite Management System. Fast.Secure.Reliable",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,61 +1,68 @@
-
-import React, { useState, useEffect } from "react";
-import DashboardStats from '../components/dashboard/DashboardStats';
-import DashboardUpcoming from '../components/dashboard/DashboardUpcoming';
-import ReceiptsAndPaymentsTrends from '../components/dashboard/ReceiptsAndPaymentsTrends';
-import '../components/styles/Dashboard.css';
-import DashboardRecent from "../components/dashboard/DashboardRecent";
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import '../styles/Dashboard.css'; // Assuming you have a CSS file for styling
+import { FaUserGraduate, FaChalkboardTeacher, FaSchool, FaCalendarAlt, FaClock } from 'react-icons/fa';
+// import enrollmentChart from '../assets/enrollment_chart.png'; // replace with actual chart image or use Chart.js later
 
 const Dashboard = () => {
-  const [user, setUser] = useState(() => {
-    try {
-      const storedUser = sessionStorage.getItem('PaySuiteUserData');
-      if (storedUser && storedUser !== 'undefined') {
-        return JSON.parse(storedUser);
-      }
-    } catch (err) {
-      console.error('Error parsing stored user data:', err);
-    }
-    return null;
-  });
-
-  const navigate = useNavigate();
-
-  
-    useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-    }, []);  //navigate
-  
+  // Sample data (can be fetched from backend later)
+  const stats = {
+    students: 512,
+    teachers: 38,
+    classes: 24,
+    session: '2025',
+    term: 'Term 2',
+  };
 
   return (
-    <div  className="dashboard-main text-center">
-      <h2 className="page-title">PaySuite Dashboard</h2>
-      <h2>Major updates coming soon</h2>
-      {/* <h4 className="sub-title">Trends</h4>
-      <div className="trend-container">
-        <ReceiptsAndPaymentsTrends />
-        <ReceiptsAndPaymentsTrends />
-        <ReceiptsAndPaymentsTrends />
-      </div>
-      
-      <div className="stats-container">
-        <h3>This Week Stats</h3>
-        <DashboardStats />
+    <div className="dashboard">
+      <h2>Dashboard Overview</h2>
+
+      <div className="card-grid">
+        <div className="card stat-card">
+          <FaUserGraduate className="card-icon" />
+          <div>
+            <h4>{stats.students}</h4>
+            <p>Students</p>
+          </div>
+        </div>
+
+        <div className="card stat-card">
+          <FaChalkboardTeacher className="card-icon" />
+          <div>
+            <h4>{stats.teachers}</h4>
+            <p>Teachers / Tutors</p>
+          </div>
+        </div>
+
+        <div className="card stat-card">
+          <FaSchool className="card-icon" />
+          <div>
+            <h4>{stats.classes}</h4>
+            <p>Classes</p>
+          </div>
+        </div>
+
+        <div className="card stat-card">
+          <FaCalendarAlt className="card-icon" />
+          <div>
+            <h4>{stats.session}</h4>
+            <p>Current Session</p>
+          </div>
+        </div>
+
+        <div className="card stat-card">
+          <FaClock className="card-icon" />
+          <div>
+            <h4>{stats.term}</h4>
+            <p>Current Term</p>
+          </div>
+        </div>
       </div>
 
-      <div className="upcoming-tasks">
-        <h3>Upcoming Deadlines</h3>
-        <DashboardUpcoming />
+      <div className="chart-section">
+        <h3>Enrollment Growth</h3>
+        {/* <img src={enrollmentChart} alt="Enrollment Chart" className="chart-img" /> */}
       </div>
-
-      <div className="recent-activity">
-        <h3>Recent Transactions</h3>
-        <DashboardRecent />
-      </div> */}
-
     </div>
   );
 };

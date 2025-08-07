@@ -1,81 +1,32 @@
 
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import { Link,  useNavigate} from 'react-router-dom';
 import { Dropdown, ButtonGroup, Button, Table, Form, Row, Col, Modal, Card } from "react-bootstrap";
 import { FaEye, FaEdit, FaHistory, FaPlusCircle, FaRecycle, FaFileCsv, FaFileExcel, FaPrint, FaBars } from "react-icons/fa";
 import NewProgram from '../components/NewProgram';
+import { usePage } from '../layouts/pageContext';
+import { samplePrograms } from '../_services/dataServices';
 
 
 const Programs = () => {
-  const data = [
-  {
-    code: "BSC-CS",
-    name: "Bachelor of Science in Computer Science",
-    description: "Focuses on programming, algorithms, software development, and data structures.",
-    faculty: "Faculty of Science and Technology"
-  },
-  {
-    code: "BA-BA",
-    name: "Bachelor of Arts in Business Administration",
-    description: "Covers business operations, management principles, and organizational leadership.",
-    faculty: "Faculty of Business and Economics"
-  },
-  {
-    code: "BSC-NUR",
-    name: "Bachelor of Science in Nursing",
-    description: "Equips students with clinical and theoretical nursing knowledge.",
-    faculty: "Faculty of Health Sciences"
-  },
-  {
-    code: "BA-LAW",
-    name: "Bachelor of Arts in Law",
-    description: "Prepares students for legal professions with a foundation in legal theory and practice.",
-    faculty: "Faculty of Law"
-  },
-  {
-    code: "BSC-ENG",
-    name: "Bachelor of Science in Mechanical Engineering",
-    description: "Focuses on mechanical systems, design, thermodynamics, and materials science.",
-    faculty: "Faculty of Engineering"
-  },
-  {
-    code: "BA-MKT",
-    name: "Bachelor of Arts in Marketing",
-    description: "Explores market research, branding, digital marketing, and consumer behavior.",
-    faculty: "Faculty of Business and Economics"
-  },
-  {
-    code: "BSC-ECON",
-    name: "Bachelor of Science in Economics",
-    description: "Studies economic theory, modeling, statistics, and financial systems.",
-    faculty: "Faculty of Social Sciences"
-  },
-  {
-    code: "BSC-BIO",
-    name: "Bachelor of Science in Biology",
-    description: "Provides an understanding of living organisms, genetics, and ecosystems.",
-    faculty: "Faculty of Science and Technology"
-  },
-  {
-    code: "BSC-MATH",
-    name: "Bachelor of Science in Mathematics",
-    description: "Offers in-depth studies in calculus, algebra, statistics, and applied mathematics.",
-    faculty: "Faculty of Science and Technology"
-  },
-  {
-    code: "BSC-IT",
-    name: "Bachelor of Science in Information Technology",
-    description: "Focuses on IT infrastructure, networking, security, and system administration.",
-    faculty: "Faculty of Science and Technology"
-  }
-];
+  const navigate = useNavigate();
+
+  const handleViewStructure = (program) => {
+    navigate(`/programs/${program.programCode}/structure`);
+  };
+
+  const { setPageTitle, setBackUrl } = usePage();
+  useEffect(() => {
+    setPageTitle('Programs Register');
+    setBackUrl('/');
+  }, []);
 
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
   const [showNewModal, setShowNewModal] = useState(false);
 
-  const filteredList = data.filter(listItem => {
+  const filteredList = samplePrograms.filter(listItem => {
     const searchValues = Object.values(listItem).join(' ').toLowerCase();
     return search
       .toLowerCase()
@@ -95,15 +46,6 @@ const Programs = () => {
   );
   return (
     <>
-        <div className="custom-header">
-          <h1 className="page-title d-flex justify-content-between align-items-center">
-            <Link to={'/'} className="back-button d-flex align-items-center">
-              <i className="bi bi-arrow-left-circle me-2"></i> Back
-            </Link>
-            <span><i class="bi bi-journal-text"></i> Programs</span>
-          </h1>
-        </div>
-      
       <Row>
         <Col md={2} className="mb-3">
           <Form.Control
@@ -119,10 +61,10 @@ const Programs = () => {
         </Col>
         <Col md={10} className="mb-3 text-end justify-content-end d-flex align-items-center gap-2">
           <Dropdown as={ButtonGroup}>
-            <Button variant="warning" size="md">
-              Export Data
+            <Button variant="warning" >
+              Export
             </Button>
-            <Dropdown.Toggle split variant="warning" size="md" id={`exports`} />
+            <Dropdown.Toggle split variant="warning" id={`exports`} />
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => {}}>
@@ -145,7 +87,7 @@ const Programs = () => {
           <thead className="table-success">
             <tr>
               <th>#</th>
-              <th>Program Code</th>
+              <th>Program programCode</th>
               <th>Program Name</th>
               <th>Faculty</th>
               <th>Description</th>
@@ -155,29 +97,29 @@ const Programs = () => {
           <tbody>
             {paginatedList.length === 0 && (
               <tr className="text-center">
-                <td colSpan="4" className="text-danger">No programs registered.</td>
+                <td colSpan="4" className="text-danger">No records found.</td>
               </tr>
             )}
-            {paginatedList.map((course, index) => (
+            {paginatedList.map((program, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{course.code}</td>
-                <td>{course.name}</td>
-                <td>{course.faculty}</td>
-                <td>{course.description}</td>
+                <td>{program.programCode}</td>
+                <td>{program.name}</td>
+                <td>{program.faculty}</td>
+                <td>{program.description}</td>
                 <td>
                   <Dropdown as={ButtonGroup}>
                     <Button variant="outline-secondary" size="sm">
-                      Actions
+                      Options
                     </Button>
                     <Dropdown.Toggle split variant="outline-secondary" size="sm" id={`dropdown-split-${index}`} />
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => alert(`Viewing ${course.name}`)}>
-                        <FaEye className="me-2" /> View
+                      <Dropdown.Item onClick={() => handleViewStructure(program)}>
+                        <FaEye className="me-2" /> View Structure
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={() => alert(`Editing ${course.name}`)}>
-                        <FaEdit className="me-2" /> Edit
+                      <Dropdown.Item onClick={() => alert(`Editing ${program.name}`)}>
+                        <FaEdit className="me-2" /> Edit Details
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>

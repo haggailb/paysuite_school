@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Topbar from '../components/Topbar';
 import { Outlet } from 'react-router-dom';
+import { usePage } from '../layouts/pageContext';
 
 const AdminLayout = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+  const { pageTitle, backUrl } = usePage(); 
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -22,11 +25,17 @@ const AdminLayout = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  
   return (
     <div className={darkMode ? 'admin-layout dark' : 'admin-layout'}>
       <Sidebar isOpen={sidebarOpen || !isMobile} />
       <div className="main-content">
-        <Topbar toggleDarkMode={() => setDarkMode(!darkMode)} darkMode={darkMode} />
+        <Topbar
+          pageTitle={pageTitle}
+          backUrl={backUrl}
+          toggleDarkMode={() => setDarkMode(!darkMode)}
+          darkMode={darkMode}
+        />
         <div className="content-wrapper">
           <Outlet />
         </div>

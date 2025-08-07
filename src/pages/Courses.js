@@ -1,64 +1,18 @@
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown, ButtonGroup, Button, Table, Form, Row, Col, Modal, Card } from "react-bootstrap";
 import { FaEye, FaEdit, FaHistory, FaPlusCircle, FaRecycle, FaFileCsv, FaFileExcel, FaPrint, FaBars } from "react-icons/fa";
 import NewCourse from '../components/NewCourse';
-
+import { usePage } from '../layouts/pageContext';
+import { sampleCourses } from '../_services/dataServices';
 
 const Courses = () => {
-  const courseData = [
-  {
-    code: 'CS101',
-    name: 'Introduction to Computer Science',
-    description: 'Fundamental concepts of computer systems, programming, and algorithms.',
-  },
-  {
-    code: 'BA201',
-    name: 'Principles of Business Administration',
-    description: 'Overview of business operations, management, and organizational behavior.',
-  },
-  {
-    code: 'ACC102',
-    name: 'Financial Accounting',
-    description: 'Basic principles of accounting, financial statements, and bookkeeping.',
-  },
-  {
-    code: 'BIO105',
-    name: 'General Biology',
-    description: 'Introduction to cellular biology, genetics, and human biology systems.',
-  },
-  {
-    code: 'PHY110',
-    name: 'Physics for Engineers',
-    description: 'Mechanics, thermodynamics, and electromagnetism principles.',
-  },
-  {
-    code: 'MAT120',
-    name: 'Calculus I',
-    description: 'Limits, derivatives, and integrals of single-variable functions.',
-  },
-  {
-    code: 'ENG103',
-    name: 'English Composition',
-    description: 'Essay writing, grammar, and academic writing techniques.',
-  },
-  {
-    code: 'IT210',
-    name: 'Web Development Basics',
-    description: 'HTML, CSS, JavaScript fundamentals for web design and development.',
-  },
-  {
-    code: 'MKT205',
-    name: 'Marketing Strategies',
-    description: 'Principles of marketing, market analysis, and branding strategies.',
-  },
-  {
-    code: 'LAW300',
-    name: 'Business Law',
-    description: 'Legal environment of business, contracts, and regulatory compliance.',
-  }
-];
+  const { setPageTitle, setBackUrl } = usePage();
+  useEffect(() => {
+    setPageTitle('Course Register');
+    setBackUrl('/');
+  }, []);
 
 
   const [search, setSearch] = useState("");
@@ -66,7 +20,7 @@ const Courses = () => {
   const recordsPerPage = 10;
   const [showNewModal, setShowNewModal] = useState(false);
 
-  const filteredList = courseData.filter(listItem => {
+  const filteredList = sampleCourses.filter(listItem => {
     const searchValues = Object.values(listItem).join(' ').toLowerCase();
     return search
       .toLowerCase()
@@ -86,15 +40,6 @@ const Courses = () => {
   );
   return (
     <>
-        <div className="custom-header">
-          <h1 className="page-title d-flex justify-content-between align-items-center">
-            <Link to={'/'} className="back-button d-flex align-items-center">
-              <i className="bi bi-arrow-left-circle me-2"></i> Back
-            </Link>
-            <span><i class="bi bi-journal-text"></i> Course List</span>
-          </h1>
-        </div>
-      
       <Row>
         <Col md={2} className="mb-3">
           <Form.Control
@@ -110,10 +55,10 @@ const Courses = () => {
         </Col>
         <Col md={10} className="mb-3 text-end justify-content-end d-flex align-items-center gap-2">
           <Dropdown as={ButtonGroup}>
-            <Button variant="warning" size="md">
-              Export Data
+            <Button variant="warning">
+              Export
             </Button>
-            <Dropdown.Toggle split variant="warning" size="md" id={`exports`} />
+            <Dropdown.Toggle split variant="warning" id={`exports`} />
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => {}}>
@@ -145,27 +90,27 @@ const Courses = () => {
           <tbody>
             {paginatedList.length === 0 && (
               <tr className="text-center">
-                <td colSpan="4" className="text-danger">No programs registered.</td>
+                <td colSpan="4" className="text-danger">No records found.</td>
               </tr>
             )}
             {paginatedList.map((course, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{course.code}</td>
-                <td>{course.name}</td>
-                <td>{course.description}</td>
+                <td>{course.courseCode}</td>
+                <td>{course.courseName}</td>
+                <td>{course.courseDesc}</td>
                 <td>
                   <Dropdown as={ButtonGroup}>
                     <Button variant="outline-secondary" size="sm">
-                      Actions
+                      Options
                     </Button>
                     <Dropdown.Toggle split variant="outline-secondary" size="sm" id={`dropdown-split-${index}`} />
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => alert(`Viewing ${course.name}`)}>
+                      <Dropdown.Item onClick={() => alert(`Viewing ${course.courseName}`)}>
                         <FaEye className="me-2" /> View
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={() => alert(`Editing ${course.name}`)}>
+                      <Dropdown.Item onClick={() => alert(`Editing ${course.courseName}`)}>
                         <FaEdit className="me-2" /> Edit
                       </Dropdown.Item>
                     </Dropdown.Menu>

@@ -81,30 +81,33 @@
   color: #ffc107;
 }
 
-.dropdown-menu {
-  border: 1px solid red;
+.sidebar .dropdown-menu {
+  display: none;
   list-style: none;
-  padding-left: 1.5rem;
+  padding: .5rem;
   margin-top: 0.3rem;
-  display: block; /* Ensure it takes up space */
-  background-color: #263544; /* Add contrast */
-  border-left: 2px solid #ffc107; /* Optional highlight */
+  background-color: #263544;
+  border-left: 2px solid #ffc107;
   border-radius: 4px;
+  min-width: 100%;
+}
+
+/* Show when parent has .open */
+.sidebar .dropdown.open .dropdown-menu {
+  display: block;
+}
+.sidebar .dropdown-menu {
+  overflow: hidden;
+  max-height: 0;
   transition: max-height 0.3s ease;
 }
 
+.sidebar .dropdown.open .dropdown-menu {
+  max-height: 500px; /* or something large enough */
+}
 
 .dropdown-menu li {
   margin-bottom: 0.5rem;
-}
-
-.dropdown-menu a {
-  color: #adb5bd;
-  text-decoration: none;
-}
-
-.dropdown-menu a:hover {
-  color: white;
 }
 
 .chevron {
@@ -119,7 +122,7 @@
 .sidebar ul li a {
   display: flex;
   align-items: center;
-  gap: 10px; /* adds consistent space between icon and text */
+  gap: 10px; 
   color: white;
   text-decoration: none;
   padding: 0.5rem 0;

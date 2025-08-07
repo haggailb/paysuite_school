@@ -1,10 +1,15 @@
-import React from 'react';
+
+import React, {useState, useEffect} from 'react';
 import '../styles/Dashboard.css'; // Assuming you have a CSS file for styling
 import { FaUserGraduate, FaChalkboardTeacher, FaSchool, FaCalendarAlt, FaClock } from 'react-icons/fa';
-// import enrollmentChart from '../assets/enrollment_chart.png'; // replace with actual chart image or use Chart.js later
+import { usePage } from '../layouts/pageContext';
 
 const Dashboard = () => {
-  // Sample data (can be fetched from backend later)
+  const { setPageTitle, setBackUrl } = usePage();
+  useEffect(() => {
+    setPageTitle('Dashboard');
+    setBackUrl('/');
+  }, []);
   const stats = {
     students: 512,
     teachers: 38,

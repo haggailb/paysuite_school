@@ -2,27 +2,26 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown, ButtonGroup, Button, Table, Form, Row, Col, Modal, Card } from "react-bootstrap";
-import { FaEye, FaEdit, FaHistory, FaPlusCircle, FaRecycle, FaFileCsv, FaFileExcel, FaPrint, FaBars, FaChevronCircleRight, FaDollarSign, FaFile } from "react-icons/fa";
-import NewStudent from '../components/NewStudent';
-import '../styles/Students.css'
+import { FaEye, FaEdit, FaHistory, FaPlusCircle, FaRecycle, FaFileCsv, FaFileExcel, FaPrint, FaBars, FaChevronCircleRight } from "react-icons/fa";
 import { usePage } from '../layouts/pageContext';
-import { sampleStudents } from '../_services/dataServices';
+import '../styles/Students.css'
+import NewStaffMember from '../components/NewStaffMember';
+import { sampleStaffMembers } from '../_services/dataServices';
 
 
-const Students = () => {
+const Staff = () => {
   const { setPageTitle, setBackUrl } = usePage();
   useEffect(() => {
-    setPageTitle('Students Register');
+    setPageTitle('Staff Members');
     setBackUrl('/');
   }, []);
-
-
+  
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
   const [showNewModal, setShowNewModal] = useState(false);
 
-  const filteredList = sampleStudents.filter(listItem => {
+  const filteredList = sampleStaffMembers.filter(listItem => {
     const searchValues = Object.values(listItem).join(' ').toLowerCase();
     return search
       .toLowerCase()
@@ -61,7 +60,7 @@ const Students = () => {
             <Button variant="warning">
               Export
             </Button>
-            <Dropdown.Toggle split variant="warning" size="md" id={`exports`} />
+            <Dropdown.Toggle split variant="warning" size="sm" id={`exports`} />
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => {}}>
@@ -85,23 +84,23 @@ const Students = () => {
           <div className="text-center text-danger py-3">No records found.</div>
         ) : (
           <Row className="g-3 justify-content-start">
-            {paginatedList.map((student, index) => (
+            {paginatedList.map((staff, index) => (
               <Col key={index} xs={12} lg={6} xl={4}>
                 <Card className="student-card shadow-sm h-100">
                   <Card.Body className="d-flex justify-content-center align-items-center">
                     {/* Student Image */}
                     <img
-                      src={student.profileImage || "/images/avatar.jpg"} 
-                      alt={`${student.firstName} ${student.lastName}`}
+                      src={staff.profileImage || "/images/avatar.jpg"} 
+                      alt={`${staff.firstName} ${staff.lastName}`}
                       className="student-avatar me-3"
                     />
 
                     {/* Student Info */}
                     <div className="flex-grow-1">
-                      <h5 className="mb-1">{student.firstName} {student.lastName}</h5>
-                      <div><strong>ID:</strong> {student.id}</div>
-                      <div><strong>Gender:</strong> {student.gender}</div>
-                      <div><strong>Program:</strong> {student.program}</div>
+                      <h5 className="mb-1">{staff.title} {staff.firstName} {staff.lastName}</h5>
+                      <div><strong>ID:</strong> {staff.employeeId}</div>
+                      <div><strong>Gender:</strong> {staff.gender}</div>
+                      <div><strong>Department:</strong> {staff.facultyName}</div>
                     </div>
 
                     {/* Actions Dropdown */}
@@ -111,16 +110,10 @@ const Students = () => {
                       </Button> */}
                       <Dropdown.Toggle variant="outline-primary" size="sm" id={`dropdown-split-${index}`} />
                       <Dropdown.Menu align="end">
-                        <Dropdown.Item onClick={() => alert(`Viewing ${student.firstName}`)}>
+                        <Dropdown.Item onClick={() => alert(`Viewing ${staff.firstName}`)}>
                           <FaEye className="me-2" /> View Profile
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => alert(`Viewing ${student.firstName}`)}>
-                          <FaFile className="me-2" /> View Results
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={() => alert(`Viewing ${student.firstName}`)}>
-                          <FaDollarSign className="me-2" /> View Statement
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={() => alert(`Editing ${student.firstName}`)}>
+                        <Dropdown.Item onClick={() => alert(`Editing ${staff.firstName}`)}>
                           <FaEdit className="me-2" /> Edit Info
                         </Dropdown.Item>
                       </Dropdown.Menu>
@@ -150,10 +143,10 @@ const Students = () => {
       </div>
       <Modal size="lg" show={showNewModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
         <Modal.Header closeButton className="bg-primary">
-          <Modal.Title className="text-white">Register New Student</Modal.Title>
+          <Modal.Title className="text-white">Register New Staff Member</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <NewStudent />
+          <NewStaffMember />
         </Modal.Body>
       </Modal>
 
@@ -161,4 +154,4 @@ const Students = () => {
   );
 };
 
-export default Students;
+export default Staff;

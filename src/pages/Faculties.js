@@ -1,45 +1,26 @@
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown, ButtonGroup, Button, Table, Form, Row, Col, Modal, Card } from "react-bootstrap";
 import { FaEye, FaEdit, FaHistory, FaPlusCircle, FaRecycle, FaFileCsv, FaFileExcel, FaPrint, FaBars } from "react-icons/fa";
-import NewCourse from '../components/NewCourse';
 import NewFaculty from '../components/NewFaculty';
+import { usePage } from '../layouts/pageContext';
+import { sampleFaculties } from '../_services/dataServices';
 
 
 const Faculties = () => {
-  
-  const facultyData = [
-  {
-    id: 1001,
-    name: "Faculty of Science",
-    code: "SCI",
-    description: "Covers all scientific programs including Biology, Physics, and Chemistry.",
-    dean: "Dr. Alice Mwansa",
-    email: "science@university.edu",
-    phone: "+260 211 123456",
-    office_location: "Block A, Main Campus"
-  },
-  {
-    id: 1002,
-    name: "School of Engineering",
-    code: "ENG",
-    description: "Covers all scientific programs in engineering including Civil, Mechanical, and Electrical.",
-    dean: "Dr. Mabumbula",
-    email: "engineering@university.edu",
-    phone: "+260 211 123456",
-    office_location: "Block A, Main Campus"
-  },
-];
-
-
+  const { setPageTitle, setBackUrl } = usePage();
+  useEffect(() => {
+    setPageTitle('Faculty Register');
+    setBackUrl('/');
+  }, []);
 
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
   const [showNewModal, setShowNewModal] = useState(false);
 
-  const filteredList = facultyData.filter(listItem => {
+  const filteredList = sampleFaculties.filter(listItem => {
     const searchValues = Object.values(listItem).join(' ').toLowerCase();
     return search
       .toLowerCase()
@@ -59,15 +40,6 @@ const Faculties = () => {
   );
   return (
     <>
-        <div className="custom-header">
-          <h1 className="page-title d-flex justify-content-between align-items-center">
-            <Link to={'/'} className="back-button d-flex align-items-center">
-              <i className="bi bi-arrow-left-circle me-2"></i> Back
-            </Link>
-            <span><i class="bi bi-journal-text"></i> Faculties / Schools</span>
-          </h1>
-        </div>
-      
       <Row>
         <Col md={2} className="mb-3">
           <Form.Control
@@ -83,8 +55,8 @@ const Faculties = () => {
         </Col>
         <Col md={10} className="mb-3 text-end justify-content-end d-flex align-items-center gap-2">
           <Dropdown as={ButtonGroup}>
-            <Button variant="warning" size="md">
-              Export Data
+            <Button variant="warning">
+              Export
             </Button>
             <Dropdown.Toggle split variant="warning" size="md" id={`exports`} />
 
@@ -119,7 +91,7 @@ const Faculties = () => {
           <tbody>
             {paginatedList.length === 0 && (
               <tr className="text-center">
-                <td colSpan="4" className="text-danger">No programs registered.</td>
+                <td colSpan="4" className="text-danger">No records found.</td>
               </tr>
             )}
             {paginatedList.map((course, index) => (
@@ -132,7 +104,7 @@ const Faculties = () => {
                 <td>
                   <Dropdown as={ButtonGroup}>
                     <Button variant="outline-secondary" size="sm">
-                      Actions
+                      Options
                     </Button>
                     <Dropdown.Toggle split variant="outline-secondary" size="sm" id={`dropdown-split-${index}`} />
 

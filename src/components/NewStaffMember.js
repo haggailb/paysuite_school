@@ -10,7 +10,7 @@ const NewStaffMember = () => {
   const [key, setKey] = useState("personal");
   const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState({
-    employeeId: '',
+    staffId: '',
     nationalId: '',
     title: '',
     firstName: '',

@@ -98,7 +98,7 @@ const Staff = () => {
                     {/* Student Info */}
                     <div className="flex-grow-1">
                       <h5 className="mb-1">{staff.title} {staff.firstName} {staff.lastName}</h5>
-                      <div><strong>ID:</strong> {staff.employeeId}</div>
+                      <div><strong>ID:</strong> {staff.staffId}</div>
                       <div><strong>Gender:</strong> {staff.gender}</div>
                       <div><strong>Department:</strong> {staff.facultyName}</div>
                     </div>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Container, Card, Form, Button, Tabs, Tab, Alert, Row, Col } from "react-bootstrap";
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
-import Select from "react-select"
+import Select from "react-select";
+import { samplePrograms } from "../_services/dataServices";
 
 const NewStudent = () => {
   const [loading, setLoading] = useState(false);
@@ -37,27 +38,6 @@ const NewStudent = () => {
       setKey(nextKey);
     }
   };
-
-  const programsList = [
-  {
-    code: "BSC-CS",
-    name: "Bachelor of Science in Computer Science",
-    description: "Focuses on programming, algorithms, software development, and data structures.",
-    faculty: "Faculty of Science and Technology"
-  },
-  {
-    code: "BA-BA",
-    name: "Bachelor of Arts in Business Administration",
-    description: "Covers business operations, management principles, and organizational leadership.",
-    faculty: "Faculty of Business and Economics"
-  },
-  {
-    code: "BSC-NUR",
-    name: "Bachelor of Science in Nursing",
-    description: "Equips students with clinical and theoretical nursing knowledge.",
-    faculty: "Faculty of Health Sciences"
-  }
-];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -209,7 +189,7 @@ const NewStudent = () => {
 
             {/* Contact Details Tab */}
             <Tab eventKey="contact" title="Contact" disabled={key !== "contact"}>
-              <Form noValidate validated={validated} onSubmit={(e) => handleNext(e, "academic")}>                
+              <Form noValidate validated={validated} onSubmit={(e) => handleNext(e, "nok")}>                
                 <Form.Group className="mb-3">
                   <Form.Label className="required">Mobile Number (With Country Code)</Form.Label>
                   <Form.Control
@@ -261,17 +241,17 @@ const NewStudent = () => {
             </Tab>
 
             {/* Academic Details Tab */}
-            <Tab eventKey="academic" title="Academic" disabled={key !== "academic"}>
+            {/* <Tab eventKey="academic" title="Academic" disabled={key !== "academic"}>
               <Form noValidate validated={validated} onSubmit={(e) => handleNext(e, "nok")}>                
                 <Form.Group className="mb-3">
                   <Form.Label className="required">Program Enrolled</Form.Label>
                   <Select
                     required
                     name="programId"
-                    options={programsList}
-                    getOptionLabel={(e) => e.name}
-                    getOptionValue={(e) => e.code}
-                    onChange={(selectedOption) => handleSelectChange("programId", selectedOption.code)}
+                    options={samplePrograms}
+                    getOptionLabel={(e) => e.programName}
+                    getOptionValue={(e) => e.programId}
+                    onChange={(selectedOption) => handleSelectChange("programId", selectedOption.programId)}
                     placeholder="-- Select Program --"
                   />
                 </Form.Group>
@@ -364,7 +344,7 @@ const NewStudent = () => {
                   </Col>
                 </Row>
               </Form>
-            </Tab>
+            </Tab> */}
 
             {/* nok Details Tab */}
             <Tab eventKey="nok" title="Next on Keen" disabled={key !== "nok"}>
@@ -401,7 +381,7 @@ const NewStudent = () => {
                 </Form.Group>
                 <Row className="d-flex justify-content-between">
                   <Col xs="auto">
-                    <Button variant="secondary" onClick={() => setKey("academic")} className="me-2">
+                    <Button variant="secondary" onClick={() => setKey("contact")} className="me-2">
                       <FaArrowLeft /> Back
                     </Button>
                   </Col>

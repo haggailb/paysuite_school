@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Card, Form, Button, Tabs, Tab, Alert, Row, Col } from "react-bootstrap";
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
 import Select from "react-select"
+import { sampleFaculties } from '../_services/dataServices';
 
 const NewProgram = () => {
   const [loading, setLoading] = useState(false);
@@ -18,30 +19,6 @@ const NewProgram = () => {
     office_location: "",
     dean: "",
   });
-
-  
-  const facultyData = [
-  {
-    id: 1001,
-    name: "Faculty of Science",
-    code: "SCI",
-    description: "Covers all scientific programs including Biology, Physics, and Chemistry.",
-    dean: "Dr. Alice Mwansa",
-    email: "science@university.edu",
-    phone: "+260 211 123456",
-    office_location: "Block A, Main Campus"
-  },
-  {
-    id: 1002,
-    name: "School of Engineering",
-    code: "ENG",
-    description: "Covers all scientific programs in engineering including Civil, Mechanical, and Electrical.",
-    dean: "Dr. Mabumbula",
-    email: "engineering@university.edu",
-    phone: "+260 211 123456",
-    office_location: "Block A, Main Campus"
-  },
-];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,9 +61,9 @@ const NewProgram = () => {
                   <Select
                     required
                     name="bankId"
-                    options={facultyData}
-                    getOptionLabel={(e) => e.name}
-                    getOptionValue={(e) => e.code}
+                    options={sampleFaculties}
+                    getOptionLabel={(e) => e.facultyName }
+                    getOptionValue={(e) => e.facultyId}
                     // onChange={(selectedOption) => handleSelectChange("bankId", selectedOption)}
                     placeholder="-- Select Faculty --"
                   />

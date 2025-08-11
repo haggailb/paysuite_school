@@ -1,28 +1,28 @@
 
 import React, {useState, useEffect} from 'react';
 import { Dropdown, ButtonGroup, Button, Table, Form, Row, Col, Modal, Card, Accordion } from "react-bootstrap";
-import { FaEye, FaEdit, FaHistory, FaPlusCircle, FaRecycle, FaFileCsv, FaFileExcel, FaPrint, FaBars, FaChevronCircleRight, FaDollarSign, FaFile } from "react-icons/fa";
+import { FaEye, FaEdit, FaHistory, FaPlusCircle, FaRecycle, FaFileCsv, FaFileExcel, FaPrint, FaBars, FaChevronCircleRight, FaDollarSign, FaFile, FaDownload } from "react-icons/fa";
 import { usePage } from '../layouts/pageContext';
-import { sampleProgramStructures } from '../_services/dataServices';
+import { sampleProgramCourseStructures } from '../_services/dataServices';
 import { Link,  useNavigate} from 'react-router-dom';
 
-const ProgramStructures = () => {
+const ProgramCourseStructures = () => {
   const { setPageTitle, setBackUrl } = usePage();
   useEffect(() => {
-    setPageTitle('Program Structures');
+    setPageTitle('Program Outlines');
     setBackUrl('/');
   }, []);
   const navigate = useNavigate();
 
-  const handleViewStructure = (program) => {
-    navigate(`/programs/${program.programCode}/structure`);
+  const handleViewOutline = (program) => {
+    navigate(`/programs/${program.programCode}/outline`, { state: { program } });
   };
 
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 1;
 
-  const filteredList = sampleProgramStructures.filter(listItem => {
+  const filteredList = sampleProgramCourseStructures.filter(listItem => {
     const searchValues = Object.values(listItem).join(' ').toLowerCase();
     return search
       .toLowerCase()
@@ -56,7 +56,7 @@ const ProgramStructures = () => {
             <Button variant="warning">
               Export
             </Button>
-            <Dropdown.Toggle split variant="warning" size="md" id={`exports`} />
+            <Dropdown.Toggle split variant="warning" id={`exports`} />
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => {}}>
@@ -70,8 +70,8 @@ const ProgramStructures = () => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Button  className="me-2 outline-primary"><FaRecycle/></Button>
-          <Link to="/program-structuring" ><Button variant="info" className="hoverable"><FaPlusCircle/> Add Structure</Button></Link> 
+          <Button  className="me-2 outline-primary"><FaRecycle/> Refresh</Button>
+          {/* <Link to="/program-structuring" ><Button variant="info" className="hoverable"><FaPlusCircle/> Add Structure</Button></Link>  */}
         </Col>
       </Row>
       
@@ -82,7 +82,7 @@ const ProgramStructures = () => {
         paginatedList.map((program, pIndex) => (
           <Card className="mb-3 shadow" key={pIndex}>
             <Card.Header className="bg-primary text-white">
-              <strong>{program.programName}</strong>
+              <strong>{program.programCode} - {program.programName}</strong>
             </Card.Header>
             <Card.Body>
               {program.structure.map((yearItem, yIndex) => (
@@ -111,7 +111,7 @@ const ProgramStructures = () => {
                 </div>
               ))}
               <Card.Footer>
-                <Button onClick={() => handleViewStructure(program)} > Open Structure </Button>
+                <Button onClick={() => handleViewOutline(program)} > View / Edit Outline </Button>
               </Card.Footer>
             </Card.Body>
           </Card>
@@ -137,4 +137,4 @@ const ProgramStructures = () => {
   );
 };
 
-export default ProgramStructures;
+export default ProgramCourseStructures;

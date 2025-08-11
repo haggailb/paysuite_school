@@ -1,7 +1,6 @@
 
 .sidebar {
   width: 220px;
-  background-color: #1e2a38;
   color: white;
   padding: 1rem;
   height: 100vh;
@@ -14,6 +13,8 @@
   padding: 1rem;
   position: sticky;
   top: 0;
+  border-top: 8px solid var(--dark-mode-color);
+  border-left: 8px solid var(--dark-mode-color);
 }
 
 .sidebar .logo {
@@ -27,7 +28,7 @@
 }
 
 .sidebar ul li {
-  margin: 1rem 0;
+  margin: .3rem 0;
 }
 
 .sidebar ul li a {
@@ -36,11 +37,6 @@
   display: flex;
   align-items: center;
 }
-
-.sidebar ul li a:hover {
-  /* text-decoration: underline; */
-}
-
 
 .sidebar.collapsed {
   width: 80px;
@@ -103,7 +99,7 @@
 }
 
 .sidebar .dropdown.open .dropdown-menu {
-  max-height: 500px; /* or something large enough */
+  max-height: 500px;
 }
 
 .dropdown-menu li {

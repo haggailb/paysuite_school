@@ -94,13 +94,13 @@ const Faculties = () => {
                 <td colSpan="4" className="text-danger">No records found.</td>
               </tr>
             )}
-            {paginatedList.map((course, index) => (
+            {paginatedList.map((faculty, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{course.code}</td>
-                <td>{course.name}</td>
-                <td>{course.description}</td>
-                <td>{course.dean}</td>
+                <td>{faculty.facultyCode}</td>
+                <td>{faculty.facultyName}</td>
+                <td>{faculty.facultyDesc}</td>
+                <td>{faculty.deanName}</td>
                 <td>
                   <Dropdown as={ButtonGroup}>
                     <Button variant="outline-secondary" size="sm">
@@ -109,10 +109,10 @@ const Faculties = () => {
                     <Dropdown.Toggle split variant="outline-secondary" size="sm" id={`dropdown-split-${index}`} />
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => alert(`Viewing ${course.name}`)}>
+                      <Dropdown.Item onClick={() => alert(`Viewing ${faculty.facultyName}`)}>
                         <FaEye className="me-2" /> View
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={() => alert(`Editing ${course.name}`)}>
+                      <Dropdown.Item onClick={() => alert(`Editing ${faculty.facultyName}`)}>
                         <FaEdit className="me-2" /> Edit
                       </Dropdown.Item>
                     </Dropdown.Menu>

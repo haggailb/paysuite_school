@@ -1,36 +1,28 @@
 
 import React, {useState, useEffect} from 'react';
-import { Link,  useNavigate} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Dropdown, ButtonGroup, Button, Table, Form, Row, Col, Modal, Card } from "react-bootstrap";
 import { FaEye, FaEdit, FaHistory, FaPlusCircle, FaRecycle, FaFileCsv, FaFileExcel, FaPrint, FaBars } from "react-icons/fa";
-import NewProgram from '../components/NewProgram';
+import NewCourse from '../components/NewCourse';
 import { usePage } from '../layouts/pageContext';
-import { samplePrograms } from '../_services/dataServices';
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { samplePrograms, sampleStudents, sampleProgramOutline } from '../_services/dataServices';
+import Select from 'react-select'
 
-
-const Programs = () => {
-  const navigate = useNavigate();
-
-  const handleViewOutline = (program) => {
-    navigate(`/programs/${program.programCode}/outline`, { state: { program } });
-  };
-
-  const handleViewFees = (program) => {
-    navigate(`/programs/${program.programCode}/fees`, { state: { program } });
-  };
-
+const Admissions = () => {
   const { setPageTitle, setBackUrl } = usePage();
   useEffect(() => {
-    setPageTitle('Programs Register');
+    setPageTitle('Student Admissions');
     setBackUrl('/');
   }, []);
 
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
   const [showNewModal, setShowNewModal] = useState(false);
 
-  const filteredList = samplePrograms.filter(listItem => {
+  const filteredList = sampleStudents.filter(listItem => {
     const searchValues = Object.values(listItem).join(' ').toLowerCase();
     return search
       .toLowerCase()
@@ -43,6 +35,9 @@ const Programs = () => {
     setShowNewModal(false);
   };
 
+  const handleAdmitStudent = (student) => {
+    navigate(`/admissions/${student.studentId}`, { state: { student } });
+  };
   const totalPages = Math.ceil(filteredList.length / recordsPerPage);
   const paginatedList = filteredList.slice(
     (currentPage - 1) * recordsPerPage,
@@ -65,7 +60,7 @@ const Programs = () => {
         </Col>
         <Col md={10} className="mb-3 text-end justify-content-end d-flex align-items-center gap-2">
           <Dropdown as={ButtonGroup}>
-            <Button variant="warning" >
+            <Button variant="warning">
               Export
             </Button>
             <Dropdown.Toggle split variant="warning" id={`exports`} />
@@ -91,10 +86,10 @@ const Programs = () => {
           <thead className="table-success">
             <tr>
               <th>#</th>
-              <th>Program programCode</th>
-              <th>Program Name</th>
-              <th>Faculty</th>
-              <th>Description</th>
+              <th>Student ID</th>
+              <th>National ID</th>
+              <th>Student Name</th>
+              <th>Gender</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -104,32 +99,17 @@ const Programs = () => {
                 <td colSpan="4" className="text-danger">No records found.</td>
               </tr>
             )}
-            {paginatedList.map((program, index) => (
+            {paginatedList.map((student, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{program.programCode}</td>
-                <td>{program.programName}</td>
-                <td>{program.facultyName}</td>
-                <td>{program.programCode}</td>
+                <td>{student.studentId}</td>
+                <td>{student.nationalId}</td>
+                <td>{student.firstName} {student.lastName}</td>
+                <td>{student.gender}</td>
                 <td>
-                  <Dropdown as={ButtonGroup}>
-                    <Button variant="outline-secondary" size="sm">
-                      Options
-                    </Button>
-                    <Dropdown.Toggle split variant="outline-secondary" size="sm" id={`dropdown-split-${index}`} />
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => handleViewOutline(program)}>
-                        <FaEye className="me-2" /> View Outline
-                      </Dropdown.Item>
-                      {/* <Dropdown.Item onClick={() => handleViewFees(program)}>
-                        <FaEye className="me-2" /> View Fee Structure
-                      </Dropdown.Item> */}
-                      <Dropdown.Item onClick={() => alert(`Editing ${program.programName}`)}>
-                        <FaEdit className="me-2" /> Edit Details
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  <Button className=" btn" onClick={() => handleAdmitStudent(student)}>
+                    Admit
+                  </Button>
                 </td>
               </tr>
             ))}
@@ -152,10 +132,10 @@ const Programs = () => {
       </div>
       <Modal size="lg" show={showNewModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
         <Modal.Header closeButton className="bg-primary">
-          <Modal.Title className="text-white">Register New Program</Modal.Title>
+          <Modal.Title className="text-white">Register New Course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <NewProgram />
+          <NewCourse onClose={handleCloseModal} />
         </Modal.Body>
       </Modal>
 
@@ -163,4 +143,4 @@ const Programs = () => {
   );
 };
 
-export default Programs;
+export default Admissions;

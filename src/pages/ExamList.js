@@ -3,34 +3,35 @@ import React, {useState, useEffect} from 'react';
 import { Link,  useNavigate} from 'react-router-dom';
 import { Dropdown, ButtonGroup, Button, Table, Form, Row, Col, Modal, Card } from "react-bootstrap";
 import { FaEye, FaEdit, FaHistory, FaPlusCircle, FaRecycle, FaFileCsv, FaFileExcel, FaPrint, FaBars } from "react-icons/fa";
-import NewProgram from '../components/NewProgram';
+import NewFaculty from '../components/NewFaculty';
 import { usePage } from '../layouts/pageContext';
-import { samplePrograms } from '../_services/dataServices';
+import { sampleExams } from '../_services/dataServices';
+import NewExam from '../components/NewExam';
 
 
-const Programs = () => {
-  const navigate = useNavigate();
-
-  const handleViewOutline = (program) => {
-    navigate(`/programs/${program.programCode}/outline`, { state: { program } });
-  };
-
-  const handleViewFees = (program) => {
-    navigate(`/programs/${program.programCode}/fees`, { state: { program } });
-  };
-
+const ExamList = () => {
   const { setPageTitle, setBackUrl } = usePage();
+
   useEffect(() => {
-    setPageTitle('Programs Register');
+    setPageTitle('List of Exams');
     setBackUrl('/');
   }, []);
+  const navigate = useNavigate();
+
+  const handleViewOutline = (exam) => {
+    navigate(`/exam-schedule/${exam.examCode}`, { state: { exam } });
+  };
+
+  const handleViewExamPapers = (exam) => {
+    navigate(`/exam-papers/${exam.examCode}`, { state: { exam } });
+  };
 
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
   const [showNewModal, setShowNewModal] = useState(false);
 
-  const filteredList = samplePrograms.filter(listItem => {
+  const filteredList = sampleExams.filter(listItem => {
     const searchValues = Object.values(listItem).join(' ').toLowerCase();
     return search
       .toLowerCase()
@@ -65,10 +66,10 @@ const Programs = () => {
         </Col>
         <Col md={10} className="mb-3 text-end justify-content-end d-flex align-items-center gap-2">
           <Dropdown as={ButtonGroup}>
-            <Button variant="warning" >
+            <Button variant="warning">
               Export
             </Button>
-            <Dropdown.Toggle split variant="warning" id={`exports`} />
+            <Dropdown.Toggle split variant="warning" size="md" id={`exports`} />
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => {}}>
@@ -83,7 +84,7 @@ const Programs = () => {
             </Dropdown.Menu>
           </Dropdown>
           <Button  className="me-2 outline-primary"><FaRecycle/></Button>
-          <Button onClick={handleShowNewModal} variant="info" className="hoverable"><FaPlusCircle/> Add </Button>
+          <Button onClick={handleShowNewModal} variant="info" className="hoverable"><FaPlusCircle/> Add Exam</Button>
         </Col>
       </Row>
       <div className="custom-table-wrapper">
@@ -91,10 +92,12 @@ const Programs = () => {
           <thead className="table-success">
             <tr>
               <th>#</th>
-              <th>Program programCode</th>
+              <th>Exam Code</th>
+              <th>Exam Year</th>
+              <th>Exam Name</th>
+              <th>Program Code</th>
               <th>Program Name</th>
-              <th>Faculty</th>
-              <th>Description</th>
+              <th>Study Level</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -104,13 +107,15 @@ const Programs = () => {
                 <td colSpan="4" className="text-danger">No records found.</td>
               </tr>
             )}
-            {paginatedList.map((program, index) => (
+            {paginatedList.map((exam, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{program.programCode}</td>
-                <td>{program.programName}</td>
-                <td>{program.facultyName}</td>
-                <td>{program.programCode}</td>
+                <td>{exam.examCode}</td>
+                <td>{exam.examYear}</td>
+                <td>{exam.examName}</td>
+                <td>{exam.programCode}</td>
+                <td>{exam.programName}</td>
+                <td>Y{exam.studyLevel}S{exam.semester}</td>
                 <td>
                   <Dropdown as={ButtonGroup}>
                     <Button variant="outline-secondary" size="sm">
@@ -119,14 +124,14 @@ const Programs = () => {
                     <Dropdown.Toggle split variant="outline-secondary" size="sm" id={`dropdown-split-${index}`} />
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => handleViewOutline(program)}>
-                        <FaEye className="me-2" /> View Outline
+                      <Dropdown.Item onClick={() => alert(`Editing ${exam.examName}`)}>
+                        <i className='bi bi-pen'></i> Edit Exam
                       </Dropdown.Item>
-                      {/* <Dropdown.Item onClick={() => handleViewFees(program)}>
-                        <FaEye className="me-2" /> View Fee Structure
-                      </Dropdown.Item> */}
-                      <Dropdown.Item onClick={() => alert(`Editing ${program.programName}`)}>
-                        <FaEdit className="me-2" /> Edit Details
+                      <Dropdown.Item onClick={() => handleViewOutline(exam)}>
+                        <i className='bi bi-calendar2-range'></i> View Schedule
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleViewExamPapers(exam)}>
+                        <i className='bi bi-clipboard-check'></i> Exam Results
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -152,10 +157,10 @@ const Programs = () => {
       </div>
       <Modal size="lg" show={showNewModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
         <Modal.Header closeButton className="bg-primary">
-          <Modal.Title className="text-white">Register New Program</Modal.Title>
+          <Modal.Title className="text-white">Add New Exam</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <NewProgram />
+          <NewExam />
         </Modal.Body>
       </Modal>
 
@@ -163,4 +168,4 @@ const Programs = () => {
   );
 };
 
-export default Programs;
+export default ExamList;

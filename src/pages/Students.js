@@ -99,7 +99,7 @@ const Students = () => {
                     {/* Student Info */}
                     <div className="flex-grow-1">
                       <h5 className="mb-1">{student.firstName} {student.lastName}</h5>
-                      <div><strong>ID:</strong> {student.id}</div>
+                      <div><strong>ID:</strong> {student.studentId}</div>
                       <div><strong>Gender:</strong> {student.gender}</div>
                       <div><strong>Program:</strong> {student.program}</div>
                     </div>

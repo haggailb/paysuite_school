@@ -8,12 +8,15 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './index.css';
 import './styles/theme.css';
 import './styles/global.css';
+import { UIProvider } from "./layouts/UIContext";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <UIProvider>
+      <App />
+    </UIProvider>
   </React.StrictMode>
 );
 
